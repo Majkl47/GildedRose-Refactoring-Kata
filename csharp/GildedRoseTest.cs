@@ -10,6 +10,7 @@ namespace csharp
         private const string sulfuras = "Sulfuras, Hand of Ragnaros";
         private const string basicItem = "Elixir of the Mongoose";
         private const string agedBrie = "Aged Brie";
+        private const string backstgPass = "Backstage passes to a TAFKAL80ETC concert";
 
         private IList<Item> items;
 
@@ -67,11 +68,29 @@ namespace csharp
         {
             items.Add(new Item { Name = basicItem, SellIn = initSellIn, Quality = 20 });
             items.Add(new Item { Name = agedBrie, SellIn = initSellIn, Quality = 10 });
+            items.Add(new Item { Name = backstgPass, SellIn = initSellIn, Quality = 10 });
             GildedRose app = new GildedRose(items);
 
             app.UpdateQuality();
 
             Assert.That(items.Select(item => item.SellIn), Is.All.EqualTo(initSellIn - 1));
+        }
+
+        [Test]
+        public void AllItems_UpdateQuality_QualityNotNegative()
+        {
+            items.Add(new Item { Name = basicItem, Quality = 3, SellIn = 2 });
+            items.Add(new Item { Name = sulfuras, Quality = 80, SellIn = 2 });
+            items.Add(new Item { Name = agedBrie, Quality = 3, SellIn = 2 });
+            items.Add(new Item { Name = backstgPass, Quality = 3, SellIn = 2 });
+            GildedRose app = new GildedRose(items);
+
+            for (int i = 0; i < 10; i++)
+            {
+                app.UpdateQuality();
+            }
+
+            Assert.That(items.Select(item => item.Quality), Is.All.GreaterThanOrEqualTo(0));
         }
 
         [Test]
@@ -91,7 +110,7 @@ namespace csharp
 
             Assert.That(items[0].Quality, Is.EqualTo(expectedQuality));
         }
-
+        
         [Test]
         [TestCase(10, 25)]
         [TestCase(1, 29)]
@@ -118,6 +137,40 @@ namespace csharp
         public void AgedBrie_UpdateQuality_QualityNotIncreasedAboveLimit(int initQuality)
         {
             items.Add(new Item { Name = agedBrie, SellIn = -5, Quality = initQuality });
+            GildedRose app = new GildedRose(items);
+
+            app.UpdateQuality();
+
+            Assert.That(items[0].Quality, Is.Not.GreaterThan(50));
+        }
+
+        [Test]
+        [TestCase(20, 21)]
+        [TestCase(11, 21)]
+        [TestCase(10, 22)]
+        [TestCase(6, 22)]
+        [TestCase(5, 23)]
+        [TestCase(1, 23)]
+        [TestCase(0, 0)]
+        [TestCase(-3, 0)]
+        public void Pass_UpdateQuality_QualityIncreasedCorrectly(int initSellIn, int expectedQuality)
+        {
+            int initQuality = 20;
+            items.Add(new Item { Name = backstgPass, SellIn = initSellIn, Quality = initQuality });
+            GildedRose app = new GildedRose(items);
+
+            app.UpdateQuality();
+
+            Assert.That(items[0].Quality, Is.EqualTo(expectedQuality));
+        }
+
+        [Test]
+        [TestCase(49)]
+        [TestCase(47)]
+        [TestCase(50)]
+        public void Pass_UpdateQuality_QualityNotIncreasedAboveLimit(int initQuality)
+        {
+            items.Add(new Item { Name = backstgPass, SellIn = 3, Quality = 49 });
             GildedRose app = new GildedRose(items);
 
             app.UpdateQuality();
