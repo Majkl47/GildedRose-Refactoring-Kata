@@ -7,6 +7,7 @@ namespace csharp
     public class GildedRoseTest
     {
         private const string sulfuras = "Sulfuras, Hand of Ragnaros";
+        private const string basicItem = "Elixir of the Mongoose";
 
         private IList<Item> items;
 
@@ -54,6 +55,38 @@ namespace csharp
             app.UpdateQuality();
 
             Assert.That(items[0].SellIn, Is.EqualTo(initSellIn));
+        }
+
+        [Test]
+        [TestCase(0)]
+        [TestCase(15)]
+        [TestCase(-5)]
+        public void BasicItem_UpdateQuality_SellInDecreasesCorrectly(int initSellIn)
+        {
+            items.Add(new Item { Name = basicItem, SellIn = initSellIn, Quality = 20 });
+            GildedRose app = new GildedRose(items);
+
+            app.UpdateQuality();
+
+            Assert.That(items[0].SellIn, Is.EqualTo(initSellIn - 1));
+        }
+
+        [Test]
+        [TestCase(10, 15)]
+        [TestCase(1, 11)]
+        [TestCase(-5, 10)]
+        public void BasicItem_UpdateQuality_QualityDecreasesCorrectly(int initSellIn, int expectedQuality)
+        {
+            int initQuality = 20;
+            items.Add(new Item { Name = basicItem, SellIn = initSellIn, Quality = initQuality });
+            GildedRose app = new GildedRose(items);
+
+            for (int i = 0; i < 5; i++)
+            {
+                app.UpdateQuality();
+            }
+
+            Assert.That(items[0].Quality, Is.EqualTo(expectedQuality));
         }
     }
 }
