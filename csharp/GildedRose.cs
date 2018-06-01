@@ -30,18 +30,26 @@ namespace csharp
                     UpdateBackstagePasses(Items[i]);
                     continue;
                 }
-
-                if (Items[i].Quality > 0)
+                else
                 {
-                    Items[i].Quality = Items[i].Quality - 1;
+                    UpdateBasicItem(Items[i]);
+                    continue;
                 }
+            }
+        }
 
-                Items[i].SellIn = Items[i].SellIn - 1;
+        private void UpdateBasicItem(Item item)
+        {
+            if (item.Quality > 0)
+            {
+                item.Quality--;
+            }
 
-                if (Items[i].SellIn < 0 && Items[i].Quality > 0)
-                {
-                    Items[i].Quality = Items[i].Quality - 1;
-                }
+            DecreaseSellIn(item);
+
+            if (item.SellIn < 0 && item.Quality > 0)
+            {
+                item.Quality--;
             }
         }
 
