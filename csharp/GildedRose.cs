@@ -20,6 +20,11 @@ namespace csharp
                     UpdateLegendaryItem(Items[i]);
                     continue;
                 }
+                else if (Items[i].Name == "Aged Brie")
+                {
+                    UpdateAgedBrieItem(Items[i]);
+                    continue;
+                }
 
                 if (Items[i].Name != "Aged Brie" && Items[i].Name != "Backstage passes to a TAFKAL80ETC concert")
                 {
@@ -82,6 +87,26 @@ namespace csharp
                     }
                 }
             }
+        }
+
+        private void UpdateAgedBrieItem(Item item)
+        {
+            DecreaseSellIn(item);
+
+            if (item.Quality < 50)
+            {
+                item.Quality++;
+            }
+
+            if (item.SellIn < 0 && item.Quality < 50)
+            {
+                item.Quality++;
+            }
+        }
+
+        private void DecreaseSellIn(Item item)
+        {
+            item.SellIn -= 1;
         }
 
         private void UpdateLegendaryItem(Item item)
