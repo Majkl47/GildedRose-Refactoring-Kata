@@ -13,10 +13,10 @@ namespace csharp
             this.Items = Items;
             availableItemsMapping = new Dictionary<string, Action<Item>>()
             {
-                { "Sulfuras, Hand of Ragnaros", UpdateLegendaryItem },
-                { "Aged Brie", UpdateAgedBrieItem },
-                { "Backstage passes to a TAFKAL80ETC concert", UpdateBackstagePasses },
-                { "Conjured Mana Cake", UpdateConjuredItem }
+                { ItemsDefinitions.Sulfuras, UpdateLegendaryItem },
+                { ItemsDefinitions.AgedBrie, UpdateAgedBrieItem },
+                { ItemsDefinitions.BackstgPass, UpdateBackstagePasses },
+                { ItemsDefinitions.ConjuredItem, UpdateConjuredItem }
             };
         }
 

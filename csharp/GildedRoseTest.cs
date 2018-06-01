@@ -7,11 +7,7 @@ namespace csharp
     [TestFixture]
     public class GildedRoseTest
     {
-        private const string sulfuras = "Sulfuras, Hand of Ragnaros";
         private const string basicItem = "Elixir of the Mongoose";
-        private const string agedBrie = "Aged Brie";
-        private const string backstgPass = "Backstage passes to a TAFKAL80ETC concert";
-        private const string conjuredItem = "Conjured Mana Cake";
 
         private IList<Item> items;
 
@@ -39,7 +35,7 @@ namespace csharp
         public void Sulfuras_UpdateQuality_QualityRemains(int initSellIn)
         {
             int initialQuality = 80;
-            items.Add(new Item { Name = sulfuras, SellIn = initSellIn, Quality = initialQuality });
+            items.Add(new Item { Name = ItemsDefinitions.Sulfuras, SellIn = initSellIn, Quality = initialQuality });
             GildedRose app = new GildedRose(items);
 
             app.UpdateQuality();
@@ -53,7 +49,7 @@ namespace csharp
         [TestCase(-5)]
         public void Sulfuras_UpdateQuality_SellInNotDecreased(int initSellIn)
         {
-            items.Add(new Item { Name = sulfuras, SellIn = initSellIn, Quality = 80 });
+            items.Add(new Item { Name = ItemsDefinitions.Sulfuras, SellIn = initSellIn, Quality = 80 });
             GildedRose app = new GildedRose(items);
 
             app.UpdateQuality();
@@ -68,9 +64,9 @@ namespace csharp
         public void AllItems_UpdateQuality_SellInDecreasesCorrectly(int initSellIn)
         {
             items.Add(new Item { Name = basicItem, SellIn = initSellIn, Quality = 20 });
-            items.Add(new Item { Name = agedBrie, SellIn = initSellIn, Quality = 10 });
-            items.Add(new Item { Name = backstgPass, SellIn = initSellIn, Quality = 10 });
-            items.Add(new Item { Name = conjuredItem, SellIn = initSellIn, Quality = 10 });
+            items.Add(new Item { Name = ItemsDefinitions.AgedBrie, SellIn = initSellIn, Quality = 10 });
+            items.Add(new Item { Name = ItemsDefinitions.BackstgPass, SellIn = initSellIn, Quality = 10 });
+            items.Add(new Item { Name = ItemsDefinitions.ConjuredItem, SellIn = initSellIn, Quality = 10 });
             GildedRose app = new GildedRose(items);
 
             app.UpdateQuality();
@@ -82,10 +78,10 @@ namespace csharp
         public void AllItems_UpdateQuality_QualityNotNegative()
         {
             items.Add(new Item { Name = basicItem, Quality = 3, SellIn = 2 });
-            items.Add(new Item { Name = sulfuras, Quality = 80, SellIn = 2 });
-            items.Add(new Item { Name = agedBrie, Quality = 3, SellIn = 2 });
-            items.Add(new Item { Name = backstgPass, Quality = 3, SellIn = 2 });
-            items.Add(new Item { Name = conjuredItem, Quality = 10, SellIn = 2 });
+            items.Add(new Item { Name = ItemsDefinitions.Sulfuras, Quality = 80, SellIn = 2 });
+            items.Add(new Item { Name = ItemsDefinitions.AgedBrie, Quality = 3, SellIn = 2 });
+            items.Add(new Item { Name = ItemsDefinitions.BackstgPass, Quality = 3, SellIn = 2 });
+            items.Add(new Item { Name = ItemsDefinitions.ConjuredItem, Quality = 10, SellIn = 2 });
             GildedRose app = new GildedRose(items);
 
             for (int i = 0; i < 10; i++)
@@ -121,7 +117,7 @@ namespace csharp
         public void AgedBrie_UpdateQuality_QualityIncreasesCorrectly(int initSellIn, int expectedQuality)
         {
             int initQuality = 20;
-            items.Add(new Item { Name = agedBrie, SellIn = initSellIn, Quality = initQuality });
+            items.Add(new Item { Name = ItemsDefinitions.AgedBrie, SellIn = initSellIn, Quality = initQuality });
             GildedRose app = new GildedRose(items);
 
             for (int i = 0; i < 5; i++)
@@ -139,7 +135,7 @@ namespace csharp
         [TestCase(49)]
         public void AgedBrie_UpdateQuality_QualityNotIncreasedAboveLimit(int initQuality)
         {
-            items.Add(new Item { Name = agedBrie, SellIn = -5, Quality = initQuality });
+            items.Add(new Item { Name = ItemsDefinitions.AgedBrie, SellIn = -5, Quality = initQuality });
             GildedRose app = new GildedRose(items);
 
             app.UpdateQuality();
@@ -159,7 +155,7 @@ namespace csharp
         public void Pass_UpdateQuality_QualityIncreasedCorrectly(int initSellIn, int expectedQuality)
         {
             int initQuality = 20;
-            items.Add(new Item { Name = backstgPass, SellIn = initSellIn, Quality = initQuality });
+            items.Add(new Item { Name = ItemsDefinitions.BackstgPass, SellIn = initSellIn, Quality = initQuality });
             GildedRose app = new GildedRose(items);
 
             app.UpdateQuality();
@@ -173,7 +169,7 @@ namespace csharp
         [TestCase(50)]
         public void Pass_UpdateQuality_QualityNotIncreasedAboveLimit(int initQuality)
         {
-            items.Add(new Item { Name = backstgPass, SellIn = 3, Quality = 49 });
+            items.Add(new Item { Name = ItemsDefinitions.BackstgPass, SellIn = 3, Quality = 49 });
             GildedRose app = new GildedRose(items);
 
             app.UpdateQuality();
@@ -189,7 +185,7 @@ namespace csharp
         public void Conjured_UpdateQuality_QualityDecreasedTwice(int initSellIn, int expectedQuality)
         {
             int initQuality = 10;
-            items.Add(new Item { Name = conjuredItem, SellIn = initSellIn, Quality = initQuality });
+            items.Add(new Item { Name = ItemsDefinitions.ConjuredItem, SellIn = initSellIn, Quality = initQuality });
             GildedRose app = new GildedRose(items);
 
             app.UpdateQuality();
