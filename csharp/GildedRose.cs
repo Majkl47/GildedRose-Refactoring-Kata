@@ -5,33 +5,31 @@ namespace csharp
 {
     public class GildedRose
     {
+        Dictionary<string, Action<Item>> availableItemsMapping;
+
         IList<Item> Items;
         public GildedRose(IList<Item> Items)
         {
             this.Items = Items;
+            availableItemsMapping = new Dictionary<string, Action<Item>>()
+            {
+                { "Sulfuras, Hand of Ragnaros", UpdateLegendaryItem },
+                { "Aged Brie", UpdateAgedBrieItem },
+                { "Backstage passes to a TAFKAL80ETC concert", UpdateBackstagePasses }
+            };
         }
 
         public void UpdateQuality()
         {
             for (var i = 0; i < Items.Count; i++)
             {
-                switch (Items[i].Name)
+                if (availableItemsMapping.ContainsKey(Items[i].Name))
                 {
-                    case "Sulfuras, Hand of Ragnaros":
-                        UpdateLegendaryItem(Items[i]);
-                        continue;
-
-                    case "Aged Brie":
-                        UpdateAgedBrieItem(Items[i]);
-                        continue;
-
-                    case "Backstage passes to a TAFKAL80ETC concert":
-                        UpdateBackstagePasses(Items[i]);
-                        continue;
-
-                    default:
-                        UpdateBasicItem(Items[i]);
-                        continue;
+                    availableItemsMapping[Items[i].Name](Items[i]);
+                }
+                else
+                {
+                    UpdateBasicItem(Items[i]);
                 }
             }
         }
