@@ -78,11 +78,6 @@ namespace csharp
             }
         }
 
-        private int AdjustQualityToLimit(int quality)
-        {
-            return quality > 50 ? 50 : quality;
-        }
-
         private void UpdateConjuredItem(Item item)
         {
             DecreaseItemBy(item, 2);
@@ -93,19 +88,28 @@ namespace csharp
             DecreaseItemBy(item, 1);
         }
 
-        private static void DecreaseItemBy(Item item, int count)
+        private void DecreaseItemBy(Item item, int count)
         {
-            if (item.Quality > 0)
-            {
-                item.Quality -= count;
-            }
+            item.Quality -= count;
 
             item.SellIn -= 1;
 
-            if (item.SellIn < 0 && item.Quality > 0)
+            if (item.SellIn < 0)
             {
                 item.Quality -= count;
             }
+
+            item.Quality = AdjustQualityToLowerLimit(item.Quality);
+        }
+
+        private int AdjustQualityToLowerLimit(int quality)
+        {
+            return quality < 0 ? 0 : quality;
+        }
+
+        private int AdjustQualityToLimit(int quality)
+        {
+            return quality > 50 ? 50 : quality;
         }
     }
 }
