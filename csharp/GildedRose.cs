@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace csharp
 {
@@ -14,6 +15,12 @@ namespace csharp
         {
             for (var i = 0; i < Items.Count; i++)
             {
+                if (Items[i].Name == "Sulfuras, Hand of Ragnaros")
+                {
+                    UpdateLegendaryItem(Items[i]);
+                    continue;
+                }
+
                 if (Items[i].Name != "Aged Brie" && Items[i].Name != "Backstage passes to a TAFKAL80ETC concert")
                 {
                     if (Items[i].Quality > 0)
@@ -84,6 +91,11 @@ namespace csharp
                     }
                 }
             }
+        }
+
+        private void UpdateLegendaryItem(Item item)
+        {
+            // Legendary item currently stays in the same state during the update
         }
     }
 }
