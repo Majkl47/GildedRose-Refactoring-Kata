@@ -180,14 +180,19 @@ namespace csharp
         }
 
         [Test]
-        public void Conjured_UpdateQuality_QualityDecreasedTwice()
+        [TestCase(5, 8)]
+        [TestCase(1, 8)]
+        [TestCase(0, 6)]
+        [TestCase(-3, 6)]
+        public void Conjured_UpdateQuality_QualityDecreasedTwice(int initSellIn, int expectedQuality)
         {
-            items.Add(new Item { Name = conjuredItem, SellIn = 3, Quality = 10 });
+            int initQuality = 10;
+            items.Add(new Item { Name = conjuredItem, SellIn = initSellIn, Quality = initQuality });
             GildedRose app = new GildedRose(items);
 
             app.UpdateQuality();
 
-            Assert.That(items[0].Quality, Is.EqualTo(8));
+            Assert.That(items[0].Quality, Is.EqualTo(expectedQuality));
         }
     }
 }
