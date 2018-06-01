@@ -15,25 +15,23 @@ namespace csharp
         {
             for (var i = 0; i < Items.Count; i++)
             {
-                if (Items[i].Name == "Sulfuras, Hand of Ragnaros")
+                switch (Items[i].Name)
                 {
-                    UpdateLegendaryItem(Items[i]);
-                    continue;
-                }
-                else if (Items[i].Name == "Aged Brie")
-                {
-                    UpdateAgedBrieItem(Items[i]);
-                    continue;
-                }
-                else if (Items[i].Name == "Backstage passes to a TAFKAL80ETC concert")
-                {
-                    UpdateBackstagePasses(Items[i]);
-                    continue;
-                }
-                else
-                {
-                    UpdateBasicItem(Items[i]);
-                    continue;
+                    case "Sulfuras, Hand of Ragnaros":
+                        UpdateLegendaryItem(Items[i]);
+                        continue;
+
+                    case "Aged Brie":
+                        UpdateAgedBrieItem(Items[i]);
+                        continue;
+
+                    case "Backstage passes to a TAFKAL80ETC concert":
+                        UpdateBackstagePasses(Items[i]);
+                        continue;
+
+                    default:
+                        UpdateBasicItem(Items[i]);
+                        continue;
                 }
             }
         }
