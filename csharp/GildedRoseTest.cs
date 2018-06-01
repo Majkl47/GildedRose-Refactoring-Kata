@@ -70,6 +70,7 @@ namespace csharp
             items.Add(new Item { Name = basicItem, SellIn = initSellIn, Quality = 20 });
             items.Add(new Item { Name = agedBrie, SellIn = initSellIn, Quality = 10 });
             items.Add(new Item { Name = backstgPass, SellIn = initSellIn, Quality = 10 });
+            items.Add(new Item { Name = conjuredItem, SellIn = initSellIn, Quality = 10 });
             GildedRose app = new GildedRose(items);
 
             app.UpdateQuality();
@@ -84,6 +85,7 @@ namespace csharp
             items.Add(new Item { Name = sulfuras, Quality = 80, SellIn = 2 });
             items.Add(new Item { Name = agedBrie, Quality = 3, SellIn = 2 });
             items.Add(new Item { Name = backstgPass, Quality = 3, SellIn = 2 });
+            items.Add(new Item { Name = conjuredItem, Quality = 10, SellIn = 2 });
             GildedRose app = new GildedRose(items);
 
             for (int i = 0; i < 10; i++)
