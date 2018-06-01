@@ -15,7 +15,8 @@ namespace csharp
             {
                 { "Sulfuras, Hand of Ragnaros", UpdateLegendaryItem },
                 { "Aged Brie", UpdateAgedBrieItem },
-                { "Backstage passes to a TAFKAL80ETC concert", UpdateBackstagePasses }
+                { "Backstage passes to a TAFKAL80ETC concert", UpdateBackstagePasses },
+                { "Conjured Mana Cake", UpdateConjuredItem }
             };
         }
 
@@ -80,6 +81,18 @@ namespace csharp
         private int AdjustQualityToLimit(int quality)
         {
             return quality > 50 ? 50 : quality;
+        }
+
+        private void UpdateConjuredItem(Item item)
+        {
+            item.SellIn--;
+
+            item.Quality -= 2;
+
+            if (item.Quality < 0)
+            {
+                item.Quality = 0;
+            }
         }
 
         private void UpdateBasicItem(Item item)

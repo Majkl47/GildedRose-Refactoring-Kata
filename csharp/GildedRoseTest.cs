@@ -11,6 +11,7 @@ namespace csharp
         private const string basicItem = "Elixir of the Mongoose";
         private const string agedBrie = "Aged Brie";
         private const string backstgPass = "Backstage passes to a TAFKAL80ETC concert";
+        private const string conjuredItem = "Conjured Mana Cake";
 
         private IList<Item> items;
 
@@ -176,6 +177,17 @@ namespace csharp
             app.UpdateQuality();
 
             Assert.That(items[0].Quality, Is.Not.GreaterThan(50));
+        }
+
+        [Test]
+        public void Conjured_UpdateQuality_QualityDecreasedTwice()
+        {
+            items.Add(new Item { Name = conjuredItem, SellIn = 3, Quality = 10 });
+            GildedRose app = new GildedRose(items);
+
+            app.UpdateQuality();
+
+            Assert.That(items[0].Quality, Is.EqualTo(8));
         }
     }
 }
