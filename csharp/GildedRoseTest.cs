@@ -27,10 +27,14 @@ namespace csharp
         }
 
         [Test]
-        public void Sulfuras_UpdateQuality_QualityRemains()
+        [TestCase(20)]
+        [TestCase(2)]
+        [TestCase(0)]
+        [TestCase(-5)]
+        public void Sulfuras_UpdateQuality_QualityRemains(int initSellIn)
         {
             int initialQuality = 80;
-            items.Add(new Item { Name = sulfuras, SellIn = 0, Quality = initialQuality });
+            items.Add(new Item { Name = sulfuras, SellIn = initSellIn, Quality = initialQuality });
             GildedRose app = new GildedRose(items);
 
             app.UpdateQuality();
@@ -42,7 +46,7 @@ namespace csharp
         [TestCase(0)]
         [TestCase(15)]
         [TestCase(-5)]
-        public void Sulfuras_UpdateQuality_SellInDoesNotDecreased(int initSellIn)
+        public void Sulfuras_UpdateQuality_SellInNotDecreased(int initSellIn)
         {
             items.Add(new Item { Name = sulfuras, SellIn = initSellIn, Quality = 80 });
             GildedRose app = new GildedRose(items);
