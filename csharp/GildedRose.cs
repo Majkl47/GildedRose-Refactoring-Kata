@@ -25,6 +25,11 @@ namespace csharp
                     UpdateAgedBrieItem(Items[i]);
                     continue;
                 }
+                else if (Items[i].Name == "Backstage passes to a TAFKAL80ETC concert")
+                {
+                    UpdateBackstagePasses(Items[i]);
+                    continue;
+                }
 
                 if (Items[i].Name != "Backstage passes to a TAFKAL80ETC concert")
                 {
@@ -76,6 +81,31 @@ namespace csharp
                         Items[i].Quality = Items[i].Quality - Items[i].Quality;
                     }
                 }
+            }
+        }
+
+        private void UpdateBackstagePasses(Item item)
+        {
+            if (item.Quality < 50)
+            {
+                item.Quality++;
+
+                if (item.SellIn < 11 && item.Quality < 50)
+                {
+                    item.Quality++;
+                }
+
+                if (item.SellIn < 6 && item.Quality < 50)
+                {
+                    item.Quality++;
+                }
+            }
+
+            DecreaseSellIn(item);
+
+            if (item.SellIn < 0)
+            {
+                item.Quality = 0;
             }
         }
 
