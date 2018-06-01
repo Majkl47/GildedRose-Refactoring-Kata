@@ -85,31 +85,26 @@ namespace csharp
 
         private void UpdateConjuredItem(Item item)
         {
-            if (item.Quality > 0)
-            {
-                item.Quality -= 2;
-            }
-
-            item.SellIn -= 1;
-
-            if (item.SellIn < 0 && item.Quality > 0)
-            {
-                item.Quality -= 2;
-            }
+            DecreaseItemBy(item, 2);
+        }
+        
+        private void UpdateBasicItem(Item item)
+        {
+            DecreaseItemBy(item, 1);
         }
 
-        private void UpdateBasicItem(Item item)
+        private static void DecreaseItemBy(Item item, int count)
         {
             if (item.Quality > 0)
             {
-                item.Quality--;
+                item.Quality -= count;
             }
 
             item.SellIn -= 1;
 
             if (item.SellIn < 0 && item.Quality > 0)
             {
-                item.Quality--;
+                item.Quality -= count;
             }
         }
     }
