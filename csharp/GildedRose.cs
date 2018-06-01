@@ -35,6 +35,8 @@ namespace csharp
             }
         }
 
+        #region Specific updates
+
         private void UpdateLegendaryItem(Item item)
         {
             // Legendary item currently stays in the same state during the update
@@ -51,7 +53,7 @@ namespace csharp
                 item.Quality++;
             }
 
-            item.Quality = AdjustQualityToLimit(item.Quality);
+            item.Quality = AdjustQualityToUpperLimit(item.Quality);
         }
                 
         private void UpdateBackstagePasses(Item item)
@@ -68,7 +70,7 @@ namespace csharp
                 item.Quality++;
             }
 
-            item.Quality = AdjustQualityToLimit(item.Quality);
+            item.Quality = AdjustQualityToUpperLimit(item.Quality);
 
             item.SellIn--;
 
@@ -87,6 +89,10 @@ namespace csharp
         {
             DecreaseItemBy(item, 1);
         }
+
+        #endregion
+
+        #region Adjustments
 
         private void DecreaseItemBy(Item item, int count)
         {
@@ -107,9 +113,11 @@ namespace csharp
             return quality < 0 ? 0 : quality;
         }
 
-        private int AdjustQualityToLimit(int quality)
+        private int AdjustQualityToUpperLimit(int quality)
         {
             return quality > 50 ? 50 : quality;
         }
+
+        #endregion
     }
 }
