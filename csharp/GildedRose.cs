@@ -34,39 +34,42 @@ namespace csharp
             }
         }
 
-        private void UpdateBasicItem(Item item)
+        private void UpdateLegendaryItem(Item item)
         {
-            if (item.Quality > 0)
-            {
-                item.Quality--;
-            }
-
-            DecreaseSellIn(item);
-
-            if (item.SellIn < 0 && item.Quality > 0)
-            {
-                item.Quality--;
-            }
+            // Legendary item currently stays in the same state during the update
         }
 
-        private void UpdateBackstagePasses(Item item)
+        private void UpdateAgedBrieItem(Item item)
         {
-            if (item.Quality < 50)
+            item.SellIn--;
+
+            item.Quality++;
+
+            if (item.SellIn < 0)
             {
                 item.Quality++;
-
-                if (item.SellIn < 11 && item.Quality < 50)
-                {
-                    item.Quality++;
-                }
-
-                if (item.SellIn < 6 && item.Quality < 50)
-                {
-                    item.Quality++;
-                }
             }
 
-            DecreaseSellIn(item);
+            item.Quality = AdjustQualityToLimit(item.Quality);
+        }
+                
+        private void UpdateBackstagePasses(Item item)
+        {
+            item.Quality++;
+
+            if (item.SellIn < 11)
+            {
+                item.Quality++;
+            }
+
+            if (item.SellIn < 6)
+            {
+                item.Quality++;
+            }
+
+            item.Quality = AdjustQualityToLimit(item.Quality);
+
+            item.SellIn--;
 
             if (item.SellIn < 0)
             {
@@ -74,29 +77,24 @@ namespace csharp
             }
         }
 
-        private void UpdateAgedBrieItem(Item item)
+        private int AdjustQualityToLimit(int quality)
         {
-            DecreaseSellIn(item);
-
-            if (item.Quality < 50)
-            {
-                item.Quality++;
-            }
-
-            if (item.SellIn < 0 && item.Quality < 50)
-            {
-                item.Quality++;
-            }
+            return quality > 50 ? 50 : quality;
         }
 
-        private void DecreaseSellIn(Item item)
+        private void UpdateBasicItem(Item item)
         {
+            if (item.Quality > 0)
+            {
+                item.Quality--;
+            }
+
             item.SellIn -= 1;
-        }
 
-        private void UpdateLegendaryItem(Item item)
-        {
-            // Legendary item currently stays in the same state during the update
+            if (item.SellIn < 0 && item.Quality > 0)
+            {
+                item.Quality--;
+            }
         }
     }
 }
